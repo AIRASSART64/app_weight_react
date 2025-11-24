@@ -125,10 +125,11 @@ function UpdateProfile() {
                             setUser({ ...user, date_of_birth: e.target.value })
                         }
                     />
-
+                    <div className="btn-row">
                     <button type="submit" className="btn btn-success mt-2">
                         Modifier
                     </button>
+                    </div>
 
                     {message && <p className="success-message">{message}</p>}
                     {error && <p className="error-message">{error}</p>}

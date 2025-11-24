@@ -9,7 +9,7 @@ import {
   Tooltip,
 } from "recharts";
 
-import { formatDateToDayMonth , formatDateToDayMonthYear } from "../utils/dateFormat";
+import { formatDateToDayMonth, formatDateToDayMonthYear } from "../utils/dateFormat";
 import { useNavigate } from "react-router-dom";
 
 function Dashboard() {
@@ -115,24 +115,29 @@ function Dashboard() {
   }
 
   if (!stats || stats.weight_evolution.length === 0) {
-   
+
     return (
       <div className="dashboard">
-        <h2>Tableau de bord</h2>
-        <p>Aucune mesure disponible. Veuillez saisir votre premier poids :</p>
+        <div className="add-weight-section">
+          <h2>Tableau de bord</h2>
+          <p>Aucune mesure disponible. Veuillez saisir votre premier poids :</p>
 
-        <form onSubmit={handleAddWeight} className="weight-form">
-          <input
-            type="number"
-            step="0.1"
-            min="0"
-            placeholder="Poids en kg"
-            value={newWeight}
-            onChange={(e) => setNewWeight(e.target.value)}
-            required
-          />
-          <button type="submit">Ajouter</button>
-        </form>
+          <form onSubmit={handleAddWeight} className="weight-form">
+            <input
+              className="input"
+              type="number"
+              step="0.1"
+              min="0"
+              placeholder="Poids en kg"
+              value={newWeight}
+              onChange={(e) => setNewWeight(e.target.value)}
+              required
+            />
+            <div className="btn-row">
+              <button type="submit" className="btn btn-primary">Ajouter</button>
+            </div>
+          </form>
+        </div>
 
         {message && <p className="success">{message}</p>}
         {error && <p className="error">{error}</p>}
@@ -147,8 +152,9 @@ function Dashboard() {
 
   return (
     <div className="dashboard">
-      <h2>Tableau de bord</h2>
-       <section className="chart-section" style={{ width: "100%", height: 300 }}>
+      <h2 className="card-title">Tableau de bord</h2>
+
+      <section className="chart-section" style={{ width: "100%", height: 300 }}>
         <h3>Évolution du poids</h3>
         <ResponsiveContainer width="100%" height="100%">
           <LineChart data={formattedWeightEvolution}>
@@ -168,47 +174,55 @@ function Dashboard() {
         </ResponsiveContainer>
       </section>
 
-      <section className="add-weight-section" style={{ marginTop: "2rem" }}>
+      <section className="add-weight-section">
         <h3>Ajouter un nouvelle mesure de poids</h3>
         <form onSubmit={handleAddWeight} className="weight-form">
-          <input
-            type="number"
-            step="0.1"
-            min="0"
-            placeholder="Poids en kg"
-            value={newWeight}
-            onChange={(e) => setNewWeight(e.target.value)}
-            required
-          />
-          <button type="submit">Ajouter</button>
+          <div>
+            <input
+              className="input"
+              type="number"
+              step="0.1"
+              min="0"
+              placeholder="Poids en kg"
+              value={newWeight}
+              onChange={(e) => setNewWeight(e.target.value)}
+              required
+            />
+            <div className="btn-row">
+              <button type="submit" className="btn btn-primary">Ajouter</button>
+            </div>
+          </div>
         </form>
         {message && <p className="success">{message}</p>}
         {error && <p className="error">{error}</p>}
       </section>
 
-      <section className="stats-section">
-        <h3>Mes stats</h3>
-        <p>Nombre de mesures : {stats.total_measures} mesures</p>
-        <p>Date première mesure : {formatDateToDayMonthYear(stats.first_date)}</p>
-        <p>Depuis la première mesure se sont écoulés: {stats.days_since_first} jours</p>
-        <p>Poids minimum : {stats.min_weight} kg</p>
-        <p>Poids maximum : {stats.max_weight} kg</p>
-        <p>Poids actuel : {stats.current_weight} kg</p>
-        <p>IMC : {stats.imc_indice.toFixed(2)} ({stats.imc_category})</p>
+      <section className="card profile-card">
+        <h3 className="card-title">Mes stats</h3>
+        <div className="profile-info">
+          <p>Nombre de mesures : <strong>{stats.total_measures} mesures</strong></p>
+          <p>Date première mesure : <strong>{formatDateToDayMonthYear(stats.first_date)}</strong></p>
+          <p>Depuis la première mesure se sont écoulés : <strong>{stats.days_since_first} jours</strong></p>
+          <p>Poids minimum : <strong>{stats.min_weight} kg</strong></p>
+          <p>Poids maximum : <strong>{stats.max_weight} kg</strong></p>
+          <p>Poids actuel : <strong>{stats.current_weight} kg</strong></p>
+          <p>IMC : <strong>{stats.imc_indice.toFixed(2)} ({stats.imc_category})</strong></p>
+        </div>
       </section>
 
-      <button
-        className="btn-profile"
-        style={{ marginTop: "20px" }}
-        onClick={() => {
-          const token = localStorage.getItem("token");
-          if (!token) return;
-          const payload = JSON.parse(atob(token.split(".")[1]));
-          navigate(`/profiles/${payload.sub}`);
-        }}
-      >
-        Retour à mon profil
-      </button>
+      <div className="btn-row">
+        <button
+          className="btn btn-primary"
+          onClick={() => {
+            const token = localStorage.getItem("token");
+            if (!token) return;
+            const payload = JSON.parse(atob(token.split(".")[1]));
+            navigate(`/profiles/${payload.sub}`);
+          }}
+        >
+          Retour à mon profil
+        </button>
+      </div>
     </div>
   );
 }

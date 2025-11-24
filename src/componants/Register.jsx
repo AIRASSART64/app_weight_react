@@ -40,7 +40,7 @@ function Register() {
         return;
       }
 
-      navigate("/login");
+      navigate("/auth/login");
     } catch (error) {
       setError("Erreur serveur");
     }
@@ -80,10 +80,11 @@ function Register() {
           <input className="input" type="number" name="size_cm"
             placeholder="Taille (cm)" value={formData.size_cm}
             onChange={handleChange} required />
-
+          <div className="btn-row"> 
           <button type="submit" className="btn btn-primary">
             S'inscrire
           </button>
+          </div>
         </form>
       </div>
     </div>

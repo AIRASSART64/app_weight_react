@@ -18,15 +18,18 @@ function Navbar() {
 
   if (!token || !decoded) {
     return (
+      <div className="btn-row">
       <nav className="navbar">
         <Link to="/" className="nav-link">Accueil</Link>
         <Link to="/auth/login" className="nav-link">Connexion</Link>
         <Link to="/auth/register" className="nav-link">Inscription</Link>
       </nav>
+      </div>
     );
   }
 
   return (
+    <div className="btn-row">
     <nav className="navbar">
       <Link to="/" className="nav-link">Accueil</Link>
       <Link to={`/profiles/${userId}`} className="nav-link">Profil</Link>
@@ -36,6 +39,7 @@ function Navbar() {
         Déconnexion
       </button>
     </nav>
+    </div>
   );
 }
 

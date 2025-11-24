@@ -66,10 +66,11 @@ function Login() {
                         onChange={(e) => setPassword(e.target.value)}
                         required
                     />
-
+                    <div className="btn-row">
                     <button type="submit" className="btn btn-primary">
                         Se connecter
                     </button>
+                    </div>
 
                     {error && <p className="error-message">{error}</p>}
                 </form>
